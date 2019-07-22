@@ -33,8 +33,11 @@
           </a>
           <p>{{article.likes.length}}</p>
         </div>
-          <button @click="changePage" class="button is-small is-warning">details</button>
-          <button @click="deleteArticle" v-if="article.userId._id === myId" class="button is-small is-danger">delete</button>
+          <div>
+            <button @click="changePage" class="button is-small is-warning">details</button>
+            <button @click="editArticle" v-if="article.userId._id === myId" class="button is-small is-success">edit</button>
+            <button @click="deleteArticle" v-if="article.userId._id === myId" class="button is-small is-danger">delete</button>
+          </div>
       </nav>
     </div>
     
@@ -58,6 +61,9 @@ export default {
       deleteArticle(){
         this.$emit('deleteArticle', this.article._id)
       },
+      editArticle(){
+        this.$emit('editArticle', this.article)
+      },
       unlike(){
         console.log('wait unlike');
         this.$emit('likesAction', [false, this.article._id])
@@ -73,6 +79,10 @@ export default {
           this.likeStatus = true
         }
       });
+      if(this.article.tags.length === 1 && this.article.tags[0].includes(',')){
+        this.article.tags = this.article.tags[0].split(',')
+        console.log('this.article.tags: ', this.article.tags);
+      }
     }
 };
 </script>

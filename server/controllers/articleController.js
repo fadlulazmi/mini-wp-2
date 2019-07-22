@@ -36,7 +36,8 @@ class ArticleController {
     }
 
     static update(req, res, next){
-        let { title, text, img, date, tags, likes, status } = req.body
+        let { title, text, date, tags, likes, status } = req.body
+        let img = req.body.img ? req.body.img : req.file.cloudStoragePublicUrl
 
         let obj = {}
         if(title) obj.title = title
@@ -92,6 +93,18 @@ class ArticleController {
     }
 
     static async search(req, res, next){
+        try {
+                       
+            let resultByTags = await Article.find({}).populate('userId')
+
+            res.json(resultByTags)
+            
+        } catch (error) {
+            console.log('error: ', error);
+            next(error)
+            
+        }
+        
 
     }
 

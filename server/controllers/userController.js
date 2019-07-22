@@ -98,14 +98,26 @@ class UserController {
             .catch(next)
     }
 
-    static list(req, res, next) {
-        User.find({})
-        .populate('followers')
-        .populate('following')
-        .then(user=> {
-            res.status(200).json(user)
-        })
-        .catch(next)
+    static async list(req, res, next) {
+        try {
+            let alluser = await User.find({
+                _id : {
+                    $not : {
+                        $in : req.loggedUser._id
+                    }
+                }
+            })
+            .populate('followers')
+            .populate('following')
+            
+            console.log('alluser: ', alluser);
+            res.json(alluser)
+
+        } catch (error) {
+            console.log('error: ', error);
+            next(error)
+        }
+        
     }
 
     static findOne(req, res, next) {

@@ -9,6 +9,7 @@ router.get('/myProfile/:id', UserController.findOne)
 
 
 router.use(authenticate)
+router.get('/', UserController.list)
 router.patch('/follow/:id', UserController.follow)
 router.patch('/unfollow/:id', UserController.unfollow)
 

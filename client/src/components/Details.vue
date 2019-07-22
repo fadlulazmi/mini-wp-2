@@ -12,14 +12,7 @@
           {{details.title}}
           <small class="is-size-6">by: {{details.userId.username}}</small>
         </h1>
-        <div>
-            <a>
-            <span class="icon is-small">
-                <i class="fas fa-heart">  </i>
-                <p>{{details.likes.length}}</p>
-            </span>
-            </a>
-        </div>
+        
         <small class="date">created at : {{new Date(details.date).toDateString()}}</small>
         <hr />
         <p v-html="details.text" class="is-size-5"></p>

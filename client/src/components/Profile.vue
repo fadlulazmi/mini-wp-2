@@ -17,23 +17,23 @@
         </div>
         <hr>
         <div id="contentProfile" class="columns">
-            <div class="column is-2">
+            <!-- <div class="column is-2">
                 following :
                 <hr>
                 <ul >
-                    <list-follow @followAction="followAction" v-for="following in myProfileData.following" :key="following._id" :follow="{follow : following, status : 'following'}"></list-follow>
+                    <list-follow @followAction="followAction" v-for="following in myProfileData.following" :key="following._id" :follow="{'follow' : following, 'status' : 'following'}"></list-follow>
                 </ul>
             </div>
             <div class="column is-2">
                 followers :
                 <hr>
                 <ul>
-                    <list-follow @followAction="followAction" v-for="followers in myProfileData.followers" :key="followers._id" :follow="{follow: followers, status : 'followers'}"></list-follow>
+                    <list-follow @followAction="followAction" v-for="followers in myProfileData.followers" :key="followers._id" :follow="{'follow': followers, 'status' : 'followers'}"></list-follow>
                 </ul>
-            </div>
+            </div> -->
             <div class="column">
                 My Post(s) :
-                <list-articles @likesAction="likesAction" @deleteArticle="deleteArticle" @goDetails="goDetails" id="listMyPosts" :dataArticles="myPosts"></list-articles>
+                <list-articles :fromProfile="true" @likesAction="likesAction" @deleteArticle="deleteArticle" @goDetails="goDetails" id="listMyPosts" :dataArticles="myPosts"></list-articles>
             </div>
         </div>
       </div>
@@ -108,12 +108,6 @@ export default {
                 .catch(err => {
                     console.log('err: ', err);
                 })
-        },
-        success() {
-            this.$toast.open({
-                message: 'deleted !',
-                type: 'is-warning'
-            })
         },
         likesAction(value){
           if(value[0]){

@@ -1,7 +1,13 @@
 <template>
     <div>
-        <!-- {{follow.follow}} -->
-        <li>{{follow.follow.username}} <button v-if="!follStatus" @click="follow" class="button is-small is-danger">follow</button><button v-if="follStatus" @click="unfollow" class="button is-small is-danger">unfollow</button></li>
+        <!-- {{follow.status}}
+        {{follStatus}} -->
+        <li>
+            {{follow.follow.username}} 
+            <button v-if="!follStatus" @click="follow" class="button is-small is-success">follow</button>
+            <button v-if="follStatus" @click="unfollow" class="button is-small is-danger">unfollow</button>
+        </li>
+        
     </div>
 </template>
 
@@ -14,17 +20,19 @@ export default {
         }
     },
     created : function(){
-        if(this.follow.status === 'followers'){
+        console.log('this.follow.status: ', this.follow.status);
+        if(this.follow.status == 'followers'){
             this.follow.follow.following.forEach(el => {
                 this.follow.follow.followers.forEach(ell => {
-                    if(el._id === ell._id){
+                    if(el._id == ell._id){
                         this.follStatus = true
                     }
                 })
             });
-        } else {
+        } 
+        else if(this.follow.status == 'following'){
             this.follStatus = true
-        }
+        } 
     },
     methods : {
         follow(){
@@ -40,5 +48,9 @@ export default {
 <style scoped>
 li {
     border-bottom: 1px solid grey;
+    padding: 10px;
+}
+li button {
+    float: right;
 }
 </style>

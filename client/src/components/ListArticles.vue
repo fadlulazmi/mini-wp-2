@@ -3,7 +3,15 @@
         <div class="columns">
             <div class="column"></div>
             <div class="column is-three-quarters">
-                <card-articles @likesAction="likesAction" @deleteArticle="deleteArticle" @goDetails="goDetails" v-for="article in dataArticles.reverse()" :key="article._id" :article="article"></card-articles>
+                <div v-if="dataArticles.length > 0">
+                    <card-articles @editArticle="editArticle" @likesAction="likesAction" @deleteArticle="deleteArticle" @goDetails="goDetails" v-for="article in dataArticles.reverse()" :key="article._id" :article="article"></card-articles>
+                </div>
+                <div v-if="dataArticles.length === 0 && fromHome" id="emptyArticles">
+                    <h1>GO FOLLOW SOMEONE ! </h1>
+                </div>
+                <div v-if="dataArticles.length === 0 && fromProfile" id="emptyArticles">
+                    <h1>GO POST YOUR FIRST ARTICLE ! </h1>
+                </div>
             </div>
             <div class="column"></div>
         </div>
@@ -15,7 +23,7 @@
 import CardArticles from './CardArticles.vue'
 
 export default {
-    props : ['dataArticles'],
+    props : ['dataArticles', 'fromHome', 'fromProfile'],
     components : {
         CardArticles
     },
@@ -28,6 +36,9 @@ export default {
         },
         likesAction(value){
             this.$emit('likesAction', value)
+        },
+        editArticle(value){
+            this.$emit('editArticle', value)
         }
     }
 }
@@ -46,6 +57,9 @@ export default {
     border-radius: 30px;
     padding: 30px;
     /* height: 20vh; */
+}
+#emptyArticles {
+    text-align: center;
 }
 
 </style>
